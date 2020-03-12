@@ -42,3 +42,7 @@ When installing PostGIS using `asdf install`, you can pass custom configure opti
 
 ## Stop
 1. Just `DROP EXTENSION postgis`
+
+
+## Credits
+- original repository/code from https://github.com/francois/asdf-postgis
