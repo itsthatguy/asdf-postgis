@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ASDF_POSTGIS_VERSION="0.0.1"
+ASDF_POSTGIS_VERSION="0.0.2"
 echo -e "> asdf-postgis: $ASDF_POSTGIS_VERSION"
 
 install_postgis() {
@@ -28,6 +28,7 @@ install_postgis() {
     local configure_options="$(construct_configure_options)"
 
     echo "Building with options: $configure_options"
+    ARCHFLAGS="-arch i386 -arch x86_64"
     ./configure $configure_options || exit 1
     make || exit 1
     make install || exit 1
