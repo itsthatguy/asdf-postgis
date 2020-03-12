@@ -30,23 +30,23 @@ install_postgis() {
     echo -e "Building with options: $configure_options"
 
     echo -e "\nConfigure 1:\n"
-    ARCHFLAGS="-arch x86_64" ./configure $configure_options || echo -e "\n\nFAIL 1"; exit 1
+    ARCHFLAGS="-arch x86_64" ./configure $configure_options || echo -e "\n\nFAIL 1" && exit 1
 
     echo -e "\nMake 2:\n"
-    ARCHFLAGS="-arch x86_64" make || echo -e "\n\nFAIL 2"; exit 1
+    ARCHFLAGS="-arch x86_64" make || echo -e "\n\nFAIL 2" && exit 1
 
     echo -e "\nMake Install 3:\n"
-    ARCHFLAGS="-arch x86_64" make install || echo -e "\n\nFAIL 3"; exit 1
+    ARCHFLAGS="-arch x86_64" make install || echo -e "\n\nFAIL 3" && exit 1
     cd contrib || exit 1
 
     echo -e "\nMake 4:\n"
-    ARCHFLAGS="-arch x86_64" make || echo -e "\n\nFAIL 4"; exit 1
+    ARCHFLAGS="-arch x86_64" make || echo -e "\n\nFAIL 4" && exit 1
 
     echo -e "\nMake Install 5:\n"
-    ARCHFLAGS="-arch x86_64" make install || echo -e "\n\nFAIL 5"; exit 1
+    ARCHFLAGS="-arch x86_64" make install || echo -e "\n\nFAIL 5" && exit 1
 
     mkdir $install_path/data || exit 1
-    $install_path/bin/initdb -D $install_path/data || echo -e "\n\nFAIL 6"; exit 1
+    $install_path/bin/initdb -D $install_path/data || echo -e "\n\nFAIL 6" && exit 1
   )
 }
 
