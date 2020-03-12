@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
+ASDF_POSTGIS_VERSION="0.0.1"
+
 install_postgis() {
+  echo -e "asdf-postgis: $ASDF_POSTGIS_VERSION"
   local install_type=$1
   local version=$2
   local install_path=$3
@@ -22,9 +25,6 @@ install_postgis() {
     cd $(untar_path $install_type $version $tmp_download_dir)
 
     local configure_options="$(construct_configure_options)"
-    # set in os_based_configure_options
-    # we unset it here because echo-ing changes the return value of the function
-    unset ASDF_PKG_MISSING
 
     echo "Building with options: $configure_options"
     ./configure $configure_options || exit 1
@@ -40,8 +40,10 @@ install_postgis() {
 
 
 construct_configure_options() {
+  load_configure_options
+
   if [ "$POSTGIS_CONFIGURE_OPTIONS" = "" ]; then
-    local configure_options="$(os_based_configure_options) --prefix=$install_path"
+    local configure_options="--prefix=$install_path"
 
     if [ "$POSTGIS_EXTRA_CONFIGURE_OPTIONS" != "" ]; then
       configure_options="$configure_options $POSTGIS_EXTRA_CONFIGURE_OPTIONS"
@@ -54,36 +56,16 @@ construct_configure_options() {
 }
 
 
-homebrew_package_path() {
-  local package_name=$1
+load_configure_options() {
+  local asdf_postgis_configure_options="${HOME}/.asdf-postgis-configure-options"
 
-  if [ "$(brew ls --versions $package_name)" = "" ]; then
-    echo ""
-  else
-    echo "$(brew --prefix $package_name)"
-  fi
-}
-
-
-exit_if_homebrew_not_installed() {
-  if [ "$(brew --version 2>/dev/null)" = "" ]; then
-    echo "ERROR: Please install homebrew for OSX"
-    exit 1
-  fi
-}
-
-
-os_based_configure_options() {
-  local operating_system=$(uname -a)
-  local configure_options=""
-
-  if [[ "$operating_system" =~ "Darwin" ]]; then
-    exit_if_homebrew_not_installed
-  else
-    configure_options=""
+  if [[ ! -r "$asdf_postgis_configure_options" ]]; then
+    return
   fi
 
-  echo $configure_options
+  set -a
+  source "$asdf_postgis_configure_options"
+  set +a
 }
 
 
@@ -126,6 +108,5 @@ get_download_url() {
   local version=$2
   echo "http://download.osgeo.org/postgis/source/postgis-${version}.tar.gz"
 }
-
 
 install_postgis $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
