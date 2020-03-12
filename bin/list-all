@@ -28,4 +28,5 @@ do
   versions="${versions} ${version}"
 done
 
-echo $versions
+echo "Testing"
+# echo $versions
