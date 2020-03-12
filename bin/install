@@ -28,13 +28,13 @@ install_postgis() {
     local configure_options="$(construct_configure_options)"
 
     echo "Building with options: $configure_options"
-    ARCHFLAGS="-arch i386 -arch x86_64"
-    ./configure $configure_options || exit 1
-    make || exit 1
-    make install || exit 1
+
+    ARCHFLAGS="-arch i386 -arch x86_64" ./configure $configure_options || exit 1
+    ARCHFLAGS="-arch i386 -arch x86_64" make || exit 1
+    ARCHFLAGS="-arch i386 -arch x86_64" make install || exit 1
     cd contrib || exit 1
-    make || exit 1
-    make install || exit 1
+    ARCHFLAGS="-arch i386 -arch x86_64" make || exit 1
+    ARCHFLAGS="-arch i386 -arch x86_64" make install || exit 1
     mkdir $install_path/data || exit 1
     $install_path/bin/initdb -D $install_path/data || exit 1
   )
