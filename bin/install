@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ASDF_POSTGIS_VERSION="0.0.1"
+ASDF_POSTGIS_VERSION="0.0.2"
 echo -e "> asdf-postgis: $ASDF_POSTGIS_VERSION"
 
 install_postgis() {
