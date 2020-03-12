@@ -29,8 +29,8 @@ install_postgis() {
 
     echo "Building with options: $configure_options"
     ARCHFLAGS="-arch i386 -arch x86_64"
-    ./configure || exit 1
-    ./make || exit 1
+    ./configure $configure_options || exit 1
+    make || exit 1
     make install || exit 1
     cd contrib || exit 1
     make || exit 1
