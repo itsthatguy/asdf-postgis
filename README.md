@@ -3,7 +3,6 @@
 PostGIS plugin for [asdf](https://github.com/asdf-vm/asdf) version manager
 
 ## Dependencies
-_This requires [brew](http://brew.sh) if you're on a mac, or a debian flavored linux.  If you need it to work on something else, you'll likely need to modify the plugin._
 According to PostGIS installation page, you will need GEOS, Proj.4, GDAL, LibXML2 and JSON-C.
 Finally, you will need a working installation of PostgreSQL. See [asdf-postgres](https://github.com/smashedtoatoms/asdf-postgres) for the asdf plugin.
 
